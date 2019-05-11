@@ -11,7 +11,7 @@ import UIKit
 class TodoListViewController: UITableViewController {
 
     
-    let itemArray = ["Call Sayohann", "Learn code", "Get Stronger"]
+    var itemArray = ["Call Sayohann", "Learn code", "Get Stronger"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +39,7 @@ class TodoListViewController: UITableViewController {
         print(itemArray[indexPath.row])
 //        print(itemArray[indexPath.row])
         
-        
-
-////        add a checkMark after selecting the row
+////      add a checkMark after selecting the row
 //        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         
         
@@ -51,14 +49,34 @@ class TodoListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         } else {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
-        
     }
     
-}
+//Mark - Add New Items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        let alert = UIAlertController(title: " Add New TodoList Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+//        what will happend once the user clicks the Add Item Button on our UIAlert
+            self.itemArray.append(textField.text!)
+//            add a text in the textField
+            self.tableView.reloadData()
+        }
+        
+        
+//        add a TEXTFIELD popup
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+    
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        }
 
 }
